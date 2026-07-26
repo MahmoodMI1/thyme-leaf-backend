@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:thyme_api}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+
+  servlet:
+    multipart:
+      max-request-size: 8MB
+      max-file-size: 8MB
+
+server:
+  port: 8083
+  max-http-request-header-size: 16KB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiry-hours: ${JWT_EXPIRY_HOURS:8}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
