@@ -1,0 +1,8 @@
+:80 {
+    handle /actuator/health {
+        reverse_proxy backend:8083
+    }
+    handle /api/* {
+        reverse_proxy backend:8083
+    }
+}
