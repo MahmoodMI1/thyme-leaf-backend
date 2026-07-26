@@ -1,4 +1,4 @@
-:192.34.58.218.sslip.io {
+192.34.58.218.sslip.io {
     handle /actuator/health {
         reverse_proxy backend:8083
     }
