@@ -34,7 +34,7 @@ public class Dish {
     private BigDecimal cost;
 
     @Column(name = "chef_id")
-    private long chefId;
+    private Long chefId;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private Instant createdAt;

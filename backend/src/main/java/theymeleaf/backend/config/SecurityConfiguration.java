@@ -15,7 +15,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/foods", "/api/dishes").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/dishes","/api/foods").permitAll()
                         .anyRequest().authenticated()
                 );
 
