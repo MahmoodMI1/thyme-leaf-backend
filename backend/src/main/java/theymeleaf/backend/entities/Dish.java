@@ -19,10 +19,13 @@ import java.util.List;
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private DishKind kind;
+
     private String photo;
     private String credit;
 
