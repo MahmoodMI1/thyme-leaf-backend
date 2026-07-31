@@ -59,4 +59,23 @@ public class SessionController {
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(new SessionDto(user.getUsername(), user.getRole().name().toLowerCase()));
     }
+
+    @GetMapping
+    public SessionDto whoAmI(org.springframework.security.core.Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        return new SessionDto(user.getUsername(), user.getRole().name().toLowerCase());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> signOut() {
+        ResponseCookie cookie = ResponseCookie.from("session", "")
+                .httpOnly(true).sameSite("Strict").secure(false).path("/")
+                .maxAge(0)
+                .build();
+
+        return ResponseEntity.noContent()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .build();
+    }
+}
 }
