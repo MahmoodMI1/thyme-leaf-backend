@@ -13,6 +13,7 @@ import theymeleaf.backend.dtos.IngredientDto;
 import theymeleaf.backend.entities.Dish;
 import theymeleaf.backend.entities.DishIngredient;
 import theymeleaf.backend.entities.FoodItem;
+import theymeleaf.backend.enums.Role;
 import theymeleaf.backend.repositories.FoodItemRepository;
 
 
@@ -41,23 +42,21 @@ public class DishMapper {
         );
     }
 
-    public DishDto toDto(Dish dish) {
-        List<IngredientDto> lines = new ArrayList<>();
+    public DishDto toDto(Dish dish, Role role) {
+        boolean money = role != Role.STAFF;
 
+        List<IngredientDto> lines = new ArrayList<>();
         for (DishIngredient ingredient : dish.getIngredients()) {
-            lines.add(toLine(ingredient));
+            IngredientDto line = toLine(ingredient);
+            lines.add(money ? line
+                    : new IngredientDto(line.foodId(), line.name(), line.unit(),
+                    line.amount(), null));
         }
 
-        return new DishDto(
-                dish.getId(),
-                dish.getName(),
-                dish.getKind(),
-                dish.getPhoto(),
-                dish.getCredit(),
-                dish.getCreditHref(),
-                dish.getCost(),
-                lines
-        );
+        return new DishDto(dish.getId(), dish.getName(), dish.getKind(),
+                dish.getPhoto(), dish.getCredit(), dish.getCreditHref(),
+                money ? dish.getCost() : null,
+                lines);
     }
 
     private IngredientDto toLine(DishIngredient line) {
