@@ -1,4 +1,3 @@
 package theymeleaf.backend.dtos;
 
-public record LoginRequest() {
-}
+public record LoginRequest(String username, String password) {}
