@@ -50,6 +50,12 @@ public class DishService {
 
     @Transactional
     public DishDto create(DishRequest request) {
+
+        if (dishRepo.findByNameIgnoreCase(request.name().trim()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "A dish with this name already exists");
+        }
+
         // Every ingredient of a NEW dish must reference an active food.
         for (IngredientRequest line : request.ingredients()) {
             requireActive(line.foodId());
@@ -66,6 +72,13 @@ public class DishService {
 
     @Transactional
     public DishDto update(Long id, DishRequest request) {
+
+        dishRepo.findByNameIgnoreCase(request.name().trim())
+                .filter(other -> !other.getId().equals(id))
+                .ifPresent(other -> {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "A dish with this name already exists");
+                });
         Dish dish = dishRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish not found"));
 
