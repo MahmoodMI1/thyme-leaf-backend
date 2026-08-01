@@ -26,7 +26,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private boolean active;
+    private boolean active = true;
 
     @Column(name = "sessions_invalidated_at")
     private Instant sessionsInvalidatedAt;
