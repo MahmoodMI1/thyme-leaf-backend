@@ -2,6 +2,7 @@ package theymeleaf.backend.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,5 +30,11 @@ public class ApiExceptionHandler {
     public ResponseEntity<Map<String, String>> statusError(ResponseStatusException e) {
         return ResponseEntity.status(e.getStatusCode())
                 .body(Map.of("error", e.getReason() != null ? e.getReason() : "Request failed"));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> unreadable(HttpMessageNotReadableException e) {
+        return Map.of("error", "Request body is invalid or contains an unrecognized value");
     }
 }
