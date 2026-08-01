@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/dishes/**").hasAnyRole("ADMIN", "CHEF")
                         .requestMatchers(HttpMethod.PUT, "/api/dishes/**").hasAnyRole("ADMIN", "CHEF")
                         .requestMatchers(HttpMethod.DELETE, "/api/dishes/**").hasAnyRole("ADMIN", "CHEF")
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e.authenticationEntryPoint(
