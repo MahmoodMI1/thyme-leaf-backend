@@ -14,7 +14,8 @@ public record UserDto(Long id, String username, String role, String status, Stri
                 user.getUsername(),
                 user.getRole().name().toLowerCase(),
                 user.isActive() ? "active" : "deactivated",
-                DATE.format(user.getCreatedAt().atZone(ZoneOffset.UTC))
+                user.getCreatedAt() == null ? null
+                        : DATE.format(user.getCreatedAt().atZone(ZoneOffset.UTC))
         );
     }
 }

@@ -37,4 +37,10 @@ public class ApiExceptionHandler {
     public Map<String, String> unreadable(HttpMessageNotReadableException e) {
         return Map.of("error", "Request body is invalid or contains an unrecognized value");
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> badValue(IllegalArgumentException e) {
+        return Map.of("error", "Invalid value");
+    }
 }
