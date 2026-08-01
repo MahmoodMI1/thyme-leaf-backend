@@ -31,7 +31,6 @@ public class User {
     @Column(name = "sessions_invalidated_at")
     private Instant sessionsInvalidatedAt;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
-    private Instant createdAt;
-
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt = Instant.now();
 }
