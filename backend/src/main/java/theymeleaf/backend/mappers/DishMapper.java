@@ -81,7 +81,7 @@ public class DishMapper {
         if (!food.isActive()) {
             return new IngredientDto(
                     food.getId(),
-                    food.getUnit() == null ? null : food.getName(),
+                    food.getName(),
                     food.getUnit(),
                     line.getAmount(),
                     null
